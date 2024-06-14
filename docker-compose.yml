@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  market:
+    build: 
+      context: ./
+      dockerfile: ./Dockerfile
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    environment:
+      - MYSQL_PATH=mysql://root:root@db:3306/marketdb
+      - APP_PORT=3000
+      - BOT_TOKEN=7067811500:AAGBpc8HzNFBGlCF39QBqcWsOUnmZkze3f4
+
+  db:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: marketdb
+    ports:
+      - "3307:3306"
