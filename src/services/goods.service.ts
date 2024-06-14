@@ -1,5 +1,5 @@
 import knex from "knex";
-import configuration from '../../src/config/configuration';
+import configuration from '../config/configuration';
 import { GoodsEntity } from "../database/entities/goods";
 
 const knexreq = knex({

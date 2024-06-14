@@ -1,6 +1,6 @@
 //category
 import { Request, Response, NextFunction} from 'express'
-import GoodsService from './goods.service';
+import GoodsService from '../services/goods.service';
 
 class GoodsController {
   

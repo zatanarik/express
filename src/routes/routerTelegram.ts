@@ -1,8 +1,8 @@
 import express from 'express'
-import ControllerTelegram from '../telegram/telegram.controller';
+import TelegramController from '../controllers/telegram.controller';
 
 const routerTelegram = express.Router();
  
-routerTelegram.post("/telegram", ControllerTelegram.newOrder);
+routerTelegram.post("/", TelegramController.newOrder);
 
 export default routerTelegram;
