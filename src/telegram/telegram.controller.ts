@@ -1,6 +1,7 @@
+import { Request, Response, NextFunction} from 'express'
 class ControllerTelegram {
-    async newOrder(){
-
+    async newOrder(request: Request, response: Response, next: NextFunction){
+        
     }
 }
 

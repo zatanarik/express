@@ -3,12 +3,12 @@ import * as dotenv from 'dotenv'
 dotenv.config();
 import configuration from './src/config/configuration';
 
-import routerApp from "./routes";
-
+import routerApp from "./src/routes";
 
 const PORT = configuration().APP_PORT;
 
 const app = express();
+
 app.use(express.json()) 
 app.use("/", routerApp);
 
