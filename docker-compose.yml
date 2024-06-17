@@ -4,14 +4,16 @@ services:
   market:
     build: .
     ports:
-      - "3000:3000"
+      - '3000:3000'
     depends_on:
-       db: 
-         condition: service_healthy
+      db:
+        condition: service_healthy
     environment:
       - MYSQL_PATH=mysql://root:qwer@db:3306/marketdb
+      - MYSQL_DB=marketdb
       - APP_PORT=3000
       - BOT_TOKEN=7067811500:AAGBpc8HzNFBGlCF39QBqcWsOUnmZkze3f4
+      - JWT_ACCESS_SECRET=qweasd
 
   db:
     image: mysql:latest
@@ -19,9 +21,9 @@ services:
       MYSQL_ROOT_PASSWORD: qwer
       MYSQL_DATABASE: marketdb
     ports:
-      - "3307:3306"
+      - '3307:3306'
     healthcheck:
-       test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
-       interval: 5s
-       timeout: 5s
-       retries: 5
+      test: ['CMD', 'mysqladmin', 'ping', '-h', 'localhost']
+      interval: 5s
+      timeout: 5s
+      retries: 5

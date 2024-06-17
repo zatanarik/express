@@ -1,17 +1,19 @@
-import ApiError from "../error/apiError";
-import { Request, Response} from 'express'
+import ApiError from '../error/apiError';
+import { NextFunction, Request, Response } from 'express';
 
-export default (err: Error, request: Request, response: Response) => {
-  console.log(err);
-
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export default (err: Error, request: Request, responce: Response, next: NextFunction) => {
   if (err instanceof ApiError) {
-    return response.status(err.status).json({
+    console.log(err, new Date());
+    return responce.status(err.status).json({
+      success: err.success,
       message: err.message,
       errors: err.errors,
     });
   }
-
-  return response.status(500).json({
-    message: "Непредивденная ошибка",
+  console.log(err, new Date());
+  return responce.status(500).json({
+    success: false,
+    message: 'Непредивденная ошибка',
   });
 };
