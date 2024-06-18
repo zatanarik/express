@@ -16,11 +16,11 @@ export default (request: any, responce: Response, next: NextFunction) => {
       return next(ApiError.UnauthorizedError());
     }
 
-    const accessToken = authorizationHeader.split('%20')[1];
-
+    const accessToken = authorizationHeader.split(' ')[1];
     if (!accessToken) {
       return next(ApiError.UnauthorizedError());
     }
+
     const JWT_ACCESS_SECRET = process.env.JWT_ACCESS_SECRET as jwt.Secret;
     const userDataJWT = jwt.verify(accessToken, JWT_ACCESS_SECRET) as JwtPayload;
     if (!userDataJWT) {

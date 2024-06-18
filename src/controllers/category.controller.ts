@@ -21,10 +21,11 @@ class CategoryController {
     try {
       const id = request.params.id as unknown as number;
       const result = await CategoryService.findCategoryById(id);
+      console.log(result);
 
       return response.status(200).json({
         success: true,
-        data: result[0],
+        data: result,
       });
     } catch (err) {
       next(err);

@@ -1,6 +1,7 @@
 import knex from 'knex';
 import configuration from '../config/configuration';
 import { CategoryEntity } from '../database/entities/category';
+import ApiError from '../error/apiError';
 
 const knexreq = knex({
   client: 'mysql2',
@@ -21,10 +22,16 @@ class CategoryService {
   }
 
   async findCategoryById(id: number) {
-    return knexreq<CategoryEntity>('category')
+    const user = await knexreq<CategoryEntity>('category')
       .select('id', 'name')
       .from('category')
       .where('id', id);
+
+    if (user.length === 0) {
+      throw ApiError.BadRequest('Не найден пользователь');
+    }
+
+    return user[0];
   }
 
   async deleteCategoryById(id: number) {
@@ -33,11 +40,16 @@ class CategoryService {
 
   // TODO
   async findGoodsByCategoryId(id: number) {
-    return knexreq<CategoryEntity>('category')
+    const goods = await knexreq<CategoryEntity>('category')
       .select('*')
       .from('category')
       .where('category.id', id)
       .join('goods', 'category.id', '=', 'goods.category_id');
+
+    if (goods.length === 0) {
+      throw ApiError.BadRequest('Не найденs товары у данной категории');
+    }
+    return goods;
   }
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   async updateCategoryById(id: number, input: any) {

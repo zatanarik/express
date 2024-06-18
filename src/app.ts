@@ -22,26 +22,26 @@ const start = async () => {
     up(knexreq);
     //knexreq.migrate.latest()
     console.log('DB started');
+
+    const PORT = configuration().APP_PORT;
+    const app = express();
+
+    app.use(express.json());
+    app.use(cookieParser());
+    app.use('/', routerApp);
+    app.use(errorMiddleware);
+
+    app
+      .listen(PORT, () => {
+        console.log('Server running at PORT: ', PORT);
+      })
+      .on('error', (error) => {
+        // gracefully handle error
+        throw new Error(error.message);
+      });
   } catch (err) {
     console.log('err, DB crashed');
   }
-
-  const PORT = configuration().APP_PORT;
-  const app = express();
-
-  app.use(express.json());
-  app.use(cookieParser());
-  app.use('/', routerApp);
-  app.use(errorMiddleware);
-
-  app
-  .listen(PORT, () => {
-      console.log('Server running at PORT: ', PORT);
-    })
-    .on('error', (error) => {
-      // gracefully handle error
-      throw new Error(error.message);
-    });
 };
 
 start();
