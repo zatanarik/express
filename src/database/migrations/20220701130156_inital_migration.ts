@@ -5,7 +5,7 @@ export async function up(knex: Knex): Promise<void> {
   await knex.raw(
     'CREATE TABLE IF NOT EXISTS `' +
       MYSQL_DB +
-      '`.`category` ( `id` INT NOT NULL AUTO_INCREMENT, `name` VARCHAR(255), `age` INT NOT NULL, PRIMARY KEY (`id`))',
+      '`.`category` ( `id` INT NOT NULL AUTO_INCREMENT, `name` VARCHAR(255) UNIQUE, `age` INT NOT NULL, PRIMARY KEY (`id`))',
   );
   await knex.raw(
     'CREATE TABLE IF NOT EXISTS `' +
