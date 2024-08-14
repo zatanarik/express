@@ -10,7 +10,7 @@ class CategoryController {
 
       return response.status(201).json({
         success: true,
-        data: result[0],
+        data: result,
       });
     } catch (err) {
       next(err);
@@ -68,7 +68,7 @@ class CategoryController {
 
       return response.status(200).send({
         success: true,
-        data: result[0],
+        data: result,
       });
     } catch (err) {
       next(err);

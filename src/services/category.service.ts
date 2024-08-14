@@ -16,22 +16,23 @@ const knexreq = knex({
 });
 
 class CategoryService {
-  async createCategory(name: string) {
+  async createCategory(name: string): Promise<CategoryEntity> {
     const id = await knexreq<CategoryEntity>('category').insert({ name: name }).returning('*');
-    return knexreq<CategoryEntity>('category').select('*').from('category').where('id', id[0]);
+    const res = await knexreq<CategoryEntity>('category').select('*').from('category').where('id', id[0]);
+    return res[0]
   }
 
-  async findCategoryById(id: number) {
-    const user = await knexreq<CategoryEntity>('category')
+  async findCategoryById(id: number): Promise<CategoryEntity> {
+    const res = await knexreq<CategoryEntity>('category')
       .select('id', 'name')
       .from('category')
       .where('id', id);
 
-    if (user.length === 0) {
-      throw ApiError.BadRequest('Не найден пользователь');
+    if (res.length === 0) {
+      throw ApiError.BadRequest('Не найдена категория');
     }
 
-    return user[0];
+    return res[0];
   }
 
   async deleteCategoryById(id: number) {
@@ -39,8 +40,8 @@ class CategoryService {
   }
 
   // TODO
-  async findGoodsByCategoryId(id: number) {
-    const goods = await knexreq<CategoryEntity>('category')
+  async findGoodsByCategoryId(id: number): Promise<CategoryEntity[]> {
+    const goods: CategoryEntity[] = await knexreq<CategoryEntity>('category')
       .select('*')
       .from('category')
       .where('category.id', id)
@@ -52,10 +53,11 @@ class CategoryService {
     return goods;
   }
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  async updateCategoryById(id: number, input: any) {
+  async updateCategoryById(id: number, input: any): Promise<CategoryEntity> {
     const name = input.name;
     await knexreq<CategoryEntity>('category').update('name', name).where('id', id);
-    return knexreq<CategoryEntity>('category').select('*').from('category').where('id', id);
+    const res = await knexreq<CategoryEntity>('category').select('*').from('category').where('id', id);
+    return res[0]
   }
 }
 

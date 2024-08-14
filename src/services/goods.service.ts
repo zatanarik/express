@@ -16,30 +16,30 @@ const knexreq = knex({
 
 class GoodsService {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  async creategGood(input: any) {
+  async creategGood(input: any): Promise<GoodsEntity> {
     const id = await knexreq<GoodsEntity>('goods').insert({
       category_id: input.category_id,
       name: input.name,
       description: input.description,
     });
-    return knexreq<GoodsEntity>('goods').select('*').from('goods').where('id', id[0]);
+    return knexreq<GoodsEntity>('goods').select('*').from('goods').where('id', id[0]).first();
   }
 
-  async findGoodById(id: number) {
-    return knexreq<GoodsEntity>('goods').select('*').from('goods').where('id', id);
+  async findGoodById(id: number): Promise<GoodsEntity> {
+    return knexreq<GoodsEntity>('goods').select('*').from('goods').where('id', id).first();
   }
 
-  async deleteGoodById(id: number) {
+  async deleteGoodById(id: number): Promise<number> {
     return knexreq<GoodsEntity>('goods').delete().where('id', id);
   }
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  async updateGoodById(id: number, input: any) {
+  async updateGoodById(id: number, input: any): Promise<GoodsEntity> {
     await knexreq<GoodsEntity>('goods').where('id', id).update({
       category_id: input.category_id,
       name: input.name,
       description: input.description,
     });
-    return knexreq<GoodsEntity>('goods').select('*').from('goods').where('id', id);
+    return knexreq<GoodsEntity>('goods').select('*').from('goods').where('id', id).first();
   }
 }
 

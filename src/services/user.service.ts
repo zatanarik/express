@@ -18,7 +18,7 @@ const knexreq = knex({
 });
 
 class userService {
-  async createUser(email: string, password: string) {
+  async createUser(email: string, password: string): Promise<UserEntity> {
     const hashPassword = await bcrypt.hash(password, 4);
     const id = await knexreq<UserEntity>('users')
       .insert({ email: email, password: hashPassword })
@@ -26,8 +26,9 @@ class userService {
     const user = await knexreq<UserEntity>('users')
       .select('id', 'email')
       .from('users')
-      .where('id', id[0]);
-    return user[0];
+      .where('id', id[0])
+      .first();
+    return user;
   }
 
   async login(email: string, password: string) {
@@ -50,12 +51,13 @@ class userService {
     return { ...token, user };
   }
 
-  async findUserByEmail(email: string) {
+  async findUserByEmail(email: string): Promise<UserEntity> {
     const user = await knexreq<UserEntity>('users')
       .select('id', 'email')
       .from('users')
-      .where('email', email);
-    return user[0];
+      .where('email', email)
+      .first();
+    return user;
   }
 }
 export default new userService();

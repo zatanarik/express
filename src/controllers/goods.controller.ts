@@ -13,7 +13,7 @@ class GoodsController {
       const result = await GoodsService.creategGood(input);
       return response.status(201).json({
         success: true,
-        data: result[0],
+        data: result,
       });
     } catch (err) {
       next(err);
@@ -27,7 +27,7 @@ class GoodsController {
       const result = await GoodsService.findGoodById(id);
       return response.status(200).json({
         success: true,
-        data: result[0],
+        data: result,
       });
     } catch (err) {
       next(err);
@@ -61,7 +61,7 @@ class GoodsController {
       const result = await GoodsService.updateGoodById(id, input);
       return response.status(200).json({
         success: true,
-        data: result[0],
+        data: result,
       });
     } catch (err) {
       next(err);
