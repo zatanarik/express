@@ -1,0 +1,9 @@
+# dependencies
+node_modules/
+
+# Local
+dist/
+.env
+package-lock.json
+
+.vscode/settings.json
