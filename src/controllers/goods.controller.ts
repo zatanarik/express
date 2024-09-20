@@ -5,9 +5,9 @@ import GoodsService from '../services/goods.service';
 class GoodsController {
   async createGood(request: Request, response: Response, next: NextFunction) {
     try {
-      const category_id = request.body.category_id;
-      const name = request.body.name;
-      const description = request.body.description;
+      const category_id: number = request.body.category_id;
+      const name: string = request.body.name;
+      const description: string = request.body.description;
       const input = { category_id: category_id, name: name, description: description };
 
       const result = await GoodsService.creategGood(input);

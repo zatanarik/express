@@ -15,6 +15,7 @@ export async function seed(knex: Knex): Promise<void> {
     //await migrateCycle(knex, limit);
     await migrateBulk(knex, limit);
 }
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 async function migrateCycle(knex: Knex, limit:number): Promise<void> {
     await mongoose
     .connect('mongodb://127.0.0.1:27017/migration')
@@ -52,6 +53,7 @@ async function migrateCycle(knex: Knex, limit:number): Promise<void> {
     console.log('Время выполнения = ', END);
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 async function migrateBulk(knex: Knex, limit:number): Promise<void> {
     await mongoose
     .connect('mongodb://127.0.0.1:27017/migration')
@@ -105,6 +107,7 @@ async function migrateBulk(knex: Knex, limit:number): Promise<void> {
     console.log('Время выполнения full = ', END);
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 async function mongoseed (limit:number) {
     await mongoose
     .connect('mongodb://127.0.0.1:27017/migration')
