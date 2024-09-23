@@ -8,7 +8,7 @@ class CategoryController {
     try {
       if (!request.body.name) throw ApiError.BadRequest("name");
 
-      const name = request.body.name;
+      const name: string = request.body.name;
       const result = await CategoryService.createCategory(name);
 
       return response.status(201).json({

@@ -35,7 +35,7 @@ class CategoryService {
     return res[0];
   }
 
-  async deleteCategoryById(id: number) {
+  async deleteCategoryById(id: number): Promise<void> {
     await knexreq<CategoryEntity>('category').delete().where('id', id);
   }
 

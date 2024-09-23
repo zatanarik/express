@@ -32,27 +32,29 @@ class userService {
   }
 
   async login(email: string, password: string) {
-    const userReq = await knexreq('users')
+    const userReq: UserEntity[] = await knexreq<UserEntity>('users')
       .select('id', 'email', 'password')
       .from('users')
       .where('email', email);
     const user = userReq[0];
 
-    if (!user) {
+    if (!user || !user.password) {
       throw ApiError.BadRequest('Нет такого пользователя');
     }
+    
     const isPassEquals = await bcrypt.compare(password, user.password);
     if (!isPassEquals) {
       throw ApiError.BadRequest('Неверный email или пароль');
     }
 
-    delete user.password;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    delete user.password
     const token = await tokenService.generateToken(user);
     return { ...token, user };
   }
 
   async findUserByEmail(email: string): Promise<UserEntity> {
-    const user = await knexreq<UserEntity>('users')
+    const user: UserEntity = await knexreq<UserEntity>('users')
       .select('id', 'email')
       .from('users')
       .where('email', email)

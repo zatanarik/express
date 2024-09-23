@@ -4,8 +4,8 @@ import tokenService from '../services/token.service';
 class UserController {
   async registrate(request: Request, response: Response, next: NextFunction) {
     try {
-      const email = request.body.email;
-      const password = request.body.password;
+      const email: string = request.body.email;
+      const password: string = request.body.password;
 
       const user = await UserService.createUser(email, password);
 
@@ -23,8 +23,8 @@ class UserController {
 
   async login(request: Request, response: Response, next: NextFunction) {
     try {
-      const email = request.body.email;
-      const password = request.body.password;
+      const email: string = request.body.email;
+      const password: string = request.body.password;
       const userData = await UserService.login(email, password);
       response.cookie('token', userData.accessToken, {
         maxAge: 30 * 24 * 60 * 60 * 1000,

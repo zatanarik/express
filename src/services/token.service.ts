@@ -1,11 +1,13 @@
 import jwt from 'jsonwebtoken';
+import { UserEntity } from '../database/entities/users';
 //import tokenModel from "../models/tokenModel.js";
 
 const JWT_ACCESS_SECRET = process.env.JWT_ACCESS_SECRET as jwt.Secret;
 
 class TokenService {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  async generateToken(payload: any) {
+  async generateToken(payload: UserEntity): Promise<{
+    accessToken: string;
+  }> {
     const accessToken = jwt.sign(payload, JWT_ACCESS_SECRET, {
       expiresIn: '15m',
     });

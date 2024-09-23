@@ -1,6 +1,7 @@
 import knex from 'knex';
 import configuration from '../config/configuration';
 import { GoodsEntity } from '../database/entities/goods';
+import { CreateGoodDTO } from '../types/createGood.dto';
 
 const knexreq = knex({
   client: 'mysql2',
@@ -16,7 +17,7 @@ const knexreq = knex({
 
 class GoodsService {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  async creategGood(input: any): Promise<GoodsEntity> {
+  async creategGood(input: CreateGoodDTO): Promise<GoodsEntity> {
     const id = await knexreq<GoodsEntity>('goods').insert({
       category_id: input.category_id,
       name: input.name,
@@ -33,7 +34,7 @@ class GoodsService {
     return knexreq<GoodsEntity>('goods').delete().where('id', id);
   }
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  async updateGoodById(id: number, input: any): Promise<GoodsEntity> {
+  async updateGoodById(id: number, input: CreateGoodDTO): Promise<GoodsEntity> {
     await knexreq<GoodsEntity>('goods').where('id', id).update({
       category_id: input.category_id,
       name: input.name,
